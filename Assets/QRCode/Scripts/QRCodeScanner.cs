@@ -10,7 +10,7 @@ public class QRCodeScanner : MonoBehaviour
 	private IScanner scanner;
 
 	public Text text;
-	public RawImage Image;
+	public RawImage image;
 	private float RestartTime;
 
 	void Awake()
@@ -30,13 +30,13 @@ public class QRCodeScanner : MonoBehaviour
 		scanner.OnReady += (sender, arg) =>
 		{
 			// 배경 이미지
-			Image.texture = scanner.Camera.Texture;
-			Image.transform.localEulerAngles = scanner.Camera.GetEulerAngles();
-			Image.transform.localScale = scanner.Camera.GetScale();
-			Image.texture.filterMode = FilterMode.Trilinear;
+			image.texture = scanner.Camera.Texture;
+			image.transform.localEulerAngles = scanner.Camera.GetEulerAngles();
+			image.transform.localScale = scanner.Camera.GetScale();
+			image.texture.filterMode = FilterMode.Trilinear;
 			
 			// 비율 조정
-			var rect = Image.GetComponent<RectTransform>();
+			var rect = image.GetComponent<RectTransform>();
 			var newHeight = rect.sizeDelta.x * scanner.Camera.Height / scanner.Camera.Width;
 			rect.sizeDelta = new Vector2(rect.sizeDelta.x, newHeight);
 
@@ -58,7 +58,7 @@ public class QRCodeScanner : MonoBehaviour
 		/*int orient = -cameraTexture.videoRotationAngle;
 		Image.rectTransform.localEulerAngles = new Vector3(0, 0, orient);*/
 
-		var rect = Image.GetComponent<RectTransform>();
+		var rect = image.GetComponent<RectTransform>();
 		rect.sizeDelta = new Vector2(Screen.height, Screen.width);
 	}
 
@@ -68,9 +68,8 @@ public class QRCodeScanner : MonoBehaviour
 		{
 			scanner.Stop();
 			if (text.text.Length > 250)
-			{
 				text.text = "";
-			}
+			
 			text.text += "Found: " + type + " / " + value + "\n";
 			RestartTime += Time.realtimeSinceStartup + 1f;
 
@@ -80,10 +79,8 @@ public class QRCodeScanner : MonoBehaviour
 	void Update()
 	{
 		if (scanner != null)
-		{
 			scanner.Update();
-		}
-
+		
 		// 재시작 검사
 		if (RestartTime != 0 && RestartTime < Time.realtimeSinceStartup)
 		{
@@ -96,7 +93,7 @@ public class QRCodeScanner : MonoBehaviour
     {
         if (pause)
         {
-			Image = null;
+			image = null;
 			scanner.Destroy();
 			scanner = null;
 		}

@@ -36,7 +36,7 @@ namespace BarcodeScanner.Scanner
 		}
 
 		// Store information about last image / results (use the update loop to access camera and callback)
-		private Color32[] pixels = null;
+		public Color32[] pixels = null;
 		private Action<string, string> Callback;
 		private ParserResult Result;
 
@@ -145,10 +145,6 @@ namespace BarcodeScanner.Scanner
 
 		#region Unthread
 
-		/// <summary>
-		/// Process Image Decoding in the main Thread
-		/// Background Thread : OFF
-		/// </summary>
 		public void DecodeQR()
 		{
 			// Wait
@@ -177,10 +173,6 @@ namespace BarcodeScanner.Scanner
 		#if !UNITY_WEBGL
 		private Thread CodeScannerThread;
 
-		/// <summary>
-		/// Process Image Decoding in a Background Thread
-		/// Background Thread : OFF
-		/// </summary>
 		public void ThreadDecodeQR()
 		{
 			while (decodeInterrupted == false && Result == null)

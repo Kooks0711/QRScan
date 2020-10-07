@@ -9,7 +9,7 @@ namespace BarcodeScanner
 		int Width { get; }
 		int Height { get; }
 
-		//
+		// 
 		void SetSize();
 		bool IsReady();
 		bool IsPlaying();
