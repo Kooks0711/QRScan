@@ -1,4 +1,4 @@
-using BarcodeScanner;
+ï»¿using BarcodeScanner;
 using BarcodeScanner.Scanner;
 using System;
 using System.Collections;
@@ -23,19 +23,19 @@ public class QRCodeScanner : MonoBehaviour
 
 	void Start()
 	{
-		// ½ºÄ³³Ê »ı¼º
+		// ìŠ¤ìºë„ˆ ìƒì„±
 		scanner = new Scanner();
 		scanner.Camera.Play();
 
 		scanner.OnReady += (sender, arg) =>
 		{
-			// ¹è°æ ÀÌ¹ÌÁö
+			// ë°°ê²½ ì´ë¯¸ì§€
 			image.texture = scanner.Camera.Texture;
 			image.transform.localEulerAngles = scanner.Camera.GetEulerAngles();
 			image.transform.localScale = scanner.Camera.GetScale();
 			image.texture.filterMode = FilterMode.Trilinear;
 			
-			// ºñÀ² Á¶Á¤
+			// ë¹„ìœ¨ ì¡°ì •
 			var rect = image.GetComponent<RectTransform>();
 			var newHeight = rect.sizeDelta.x * scanner.Camera.Height / scanner.Camera.Width;
 			rect.sizeDelta = new Vector2(rect.sizeDelta.x, newHeight);
@@ -81,7 +81,7 @@ public class QRCodeScanner : MonoBehaviour
 		if (scanner != null)
 			scanner.Update();
 		
-		// Àç½ÃÀÛ °Ë»ç
+		// ì¬ì‹œì‘ ê²€ì‚¬
 		if (RestartTime != 0 && RestartTime < Time.realtimeSinceStartup)
 		{
 			StartScanner();
