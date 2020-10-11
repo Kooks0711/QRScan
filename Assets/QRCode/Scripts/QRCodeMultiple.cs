@@ -22,11 +22,14 @@ public class QRCodeMultiple : MonoBehaviour
     private string resultstr;
 
     public Text text;
+    public Text text2;
     public RawImage image;
     private Thread scanThread;
 
     void Start()
     {
+        text2.text = $"wid : {Screen.width} , hei : {Screen.height}";
+
         scanner = new Scanner();
         scanner.Camera.Play();
 
@@ -59,6 +62,7 @@ public class QRCodeMultiple : MonoBehaviour
 
     private ResultPoint[] point;
     private Result[] results;
+    private Result result;
 
     public void ThreadQR()
     {
@@ -79,21 +83,41 @@ public class QRCodeMultiple : MonoBehaviour
                     foreach(var item in results)
                     {
                         point = item.ResultPoints;
-                        Debug.Log($"qr :: {item.Text}\n" +
+                        
+                        // in center
+                        if(point[0].X >= 760 && point[0].X <= 1250)
+                        {
+                            if(point[0].Y >= 360 && point[0].Y <= 800)
+                            {
+                                Debug.Log($"QR Found\nqr :: {item.Text}\n" +
+                                    $"x :: {point[0].X} , y :: {point[0].Y}");
+
+                                resultstr = $"qr :: {item.Text}\n" +
+                                    $"x :: {point[0].X} , y :: {point[0].Y}";
+                            }
+                        }
+
+
+                        /*Debug.Log($"qr :: {item.Text}\n" +
                             $"x :: {point[0].X} , y :: {point[0].Y}");
 
                         resultstr = $"qr :: {item.Text}\n" +
-                            $"x :: {point[0].X} , y :: {point[0].Y}";
+                            $"x :: {point[0].X} , y :: {point[0].Y}";*/
+
+                        // x 760  y 800    x 760  y 370
+                        // x 1250 y 800    x 1250 y 370
                     }
                 }
                 // pixels == null;
-                Thread.Sleep(200);
+                Thread.Sleep(150);
             }
             catch (Exception e)
             {
                 Debug.LogWarning(e);
             }
-            Thread.Sleep(200);
+            Thread.Sleep(150);
+
+            // resultstr = null;
         }
         #endregion
         #region single
